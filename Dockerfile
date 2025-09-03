@@ -1,2 +1,4 @@
-FROM baseImage node:14
-WORKDIR /the/workdir/path
+FROM python:3.10-slim
+WORKDIR /app
+COPY . /app
+CMD ["python", "hello.py"]
