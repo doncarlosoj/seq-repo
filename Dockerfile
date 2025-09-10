@@ -1,21 +1,12 @@
 FROM python:alpine
-
 # Update OS packages to latest versions to reduce vulnerabilities
-RUN apt-get update && apt-get upgrade -y && apt-get clean && rm -rf /var/lib/apt/lists/*
-
+RUN apk update && apk upgrade
 WORKDIR /app
 COPY . /app
-
 # Install security updates and upgrade pip/setuptools/wheel
-RUN apt-get update && \
-	apt-get upgrade -y && \
-	apt-get install -y --no-install-recommends gcc && \
+RUN apk add --no-cache gcc musl-dev && \
 	pip install --upgrade pip setuptools wheel && \
-	apt-get remove -y gcc && \
-	apt-get autoremove -y && \
-	apt-get clean && \
-	rm -rf /var/lib/apt/lists/*
-
+	apk del gcc musl-dev
 CMD ["python", "hello.py"]
 # CMD ["python", "-m", "http.server", "8000"]
 # EXPOSE 8000
