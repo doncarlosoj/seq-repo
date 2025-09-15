@@ -1,5 +1,5 @@
 # Use Python base image
-FROM python:3.10.14-slim-bullseye
+FROM python:3.10-slim
 
 # Ensure all system packages are up-to-date to reduce vulnerabilities
 RUN apt-get update && apt-get upgrade -y && apt-get clean
