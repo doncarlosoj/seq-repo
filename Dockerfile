@@ -1,7 +1,4 @@
 # Use Python base image
-FROM python:3.10-slim
-
-# ...existing code...# Use Python base image
 FROM python:3.10.14-slim-bookworm
 
 # Ensure all system packages are up-to-date to reduce vulnerabilities
