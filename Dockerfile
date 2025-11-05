@@ -1,20 +1,19 @@
 # Use Python base image
-FROM python:3.10.14-slim-bookworm
+FROM python:3.10-slim
 
 # Ensure all system packages are up-to-date to reduce vulnerabilities
-RUN apt-get update && apt-get upgrade -y && apt-get clean
+RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
+    gcc \
+    && pip install --no-cache-dir --upgrade pip \
+    && apt-get purge -y --auto-remove gcc \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set working directory inside the container
 WORKDIR /app
 
 # Install dependencies (if you have requirements.txt)
 COPY requirements.txt .
-RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
-	gcc \
-	build-essential \
-	&& pip install --no-cache-dir -r requirements.txt \
-	&& apt-get purge -y --auto-remove gcc build-essential \
-	&& rm -rf /var/lib/apt/lists/*
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy all code
 COPY . .
